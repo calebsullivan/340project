@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <iostream>
 
+// http://stackoverflow.com/a/18369732
+// http://stackoverflow.com/a/20170989
 template <class T>
 std::string
 type_name()
@@ -34,29 +36,35 @@ type_name()
         r += "&&";
     return r;
 } 
-// http://stackoverflow.com/a/18369732
-// http://stackoverflow.com/a/20170989
+
 
 
 //wiki/ANSI_escape_code#graphics
-//er("help!"); 
-void er(const char* n){
-    std::cerr << "\033[1;31m" << n << "\033[0m\n";
-} //http://stackoverflow.com/a/2616912
-
-//eb("help!"); 
-void eb(const char* n){
-    std::cerr << "\033[1;7;31;5m" << n << "\033[0m\n";
-} //http://stackoverflow.com/a/2616912
-
-//et("help!"); 
-void et(const char* n){
-    std::cerr << "\033[1;7;5m" << n << "\033[0m\n";
-} //http://stackoverflow.com/a/2616912
-
+//http://stackoverflow.com/a/14175929
+//http://stackoverflow.com/a/2616912
 
 template<typename T>
-void ftype(T&& parameter)
-{
-    std::cout << type_name<decltype(parameter)>();
+void er(T i){
+    std::cerr << "\033[1;31m" << i << "\033[0m\n";
+} 
+
+template<typename T>
+void eb(T i){
+    std::cerr << "\033[1;7;31;5m" << i << "\033[0m\n";
+}
+
+template<typename T>
+void et(T i){
+    std::cerr << "\033[1;7;5m" << i << "\033[0m\n";
+}
+
+template<typename T>
+void ftype(T&& i){
+    std::cout << "\033[1;33m" << type_name<decltype(i)>() << "\033[0m\n";
+}
+
+template<typename T>
+void ftype(T&& i, T&& j){
+    std::cout << "\033[1;33m" << type_name<decltype(i)>() << "\033[0m" 
+              << " :: " << "\033[1;7;33m" << j << "\033[0m\n";
 }
