@@ -36,6 +36,8 @@ public:
   //
   trie() = default;
 
+  template <typename OutIter>
+  std::size_t output_matches(std::string const& pattern, OutIter&& out) const;
   //
   // Copy construction performs a breadth-first search (BFS) of the trie
   // being copied from. The BFS is tracked using a std::vector as a queue
@@ -94,13 +96,6 @@ public:
         stack.emplace_back( tmp_node, i->second );
       }
     } while (!stack.empty());
-  }
-
-  template <typename OutIter>
-  std::size_t output_matches(std::string const& pattern, OutIter&& out) const
-  {
-    std::size_t retval{};
-    return retval;
   }
 
   //
@@ -299,6 +294,7 @@ public:
       prefix.pop_back();
     }
   }
+
 };
 
 //

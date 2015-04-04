@@ -9,6 +9,80 @@
 using namespace std;
 //using namespace cxx_project;
 
+template <typename OutIter>
+std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) const{
+	size_t retval{};
+	size_t cur_prefix_len = 0;
+	queue<pair<std::string, trie const*>> bfs;
+	
+
+	bfs.emplace(string{}, this);
+
+	er("output_matches start");
+
+	//http://stackoverflow.com/a/9438329
+	for(auto curchar : pattern){ // for each char in string
+		// et(curchar);
+		ftype(curchar);
+
+		for(; bfs.front().first.size() == cur_prefix_len; ){
+			auto node = bfs.front();
+			eb("!");
+
+			if(node.second == nullptr){ 
+				//Guard against node's trie const* being nullptr. 
+				
+				continue;
+			}
+			auto child = node.second->children.find(curchar);
+			auto childEnd = nullptr; //end iterator of the child map
+
+			if(curchar != '?'){
+
+				if(child != childEnd){
+
+				}
+			} else if(curchar == '?'){
+				// range-based for loop that iterates over node's immediate children.
+				for(auto child : node.second->children) 
+					// where prefix is node.first + child.first
+					bfs.emplace(prefix, child->second); //replace prefix	
+			}
+
+			bfs.pop();
+		}
+		++cur_prefix_len;
+	}
+
+
+
+	for(; !bfs.empty(); ){ // for each element in queue
+		bool is_match = false;
+		auto node = bfs.front(); // trie*
+
+		// size() == pattern.size() AND if node's trie const* is not nullptr
+		if(size() == pattern.size() && node_ptr.second != nullptr){
+			auto i = node.second->children.find(char{});
+			auto iEnd = node.second->children.end();
+
+			if( i!=iEnd && i.second == nullptr){ //end of sequence marker found
+				is_match = true;
+			}
+
+			if(is_match){
+				//out + node.first //need to append iterator
+				//out++ // ++iterator
+				++retval;
+
+			}
+		}
+		bfs.pop();
+	}
+
+	er("output_matches exit");
+	return retval;
+}
+
 
 // int main(int argc, char *argv[])
 // {

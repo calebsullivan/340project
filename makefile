@@ -1,17 +1,14 @@
 all: 
 	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx
 
-trie:
-	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx
-
 crun:
-	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx && ./a.out
+	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx && ./a.out wn.txt 'c?t'
 
 run:
 	./a.out
 
 valgrind:
-	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx && valgrind ./a.out
+	clang++ -std=c++11 -Wall -Wextra -o a.out trie.cxx && valgrind ./a.out wn.txt 'c?t'
 
 help:
 	@echo "Usage: make || make run"
