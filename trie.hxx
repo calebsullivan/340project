@@ -1,7 +1,22 @@
-#include <map>
-#include <queue>
-#include <string>
-#include <iostream>
+#ifndef _MAP
+#define _MAP
+  #include <map>
+#endif
+#ifndef _QUEUE
+#define _QUEUE
+  #include <queue>
+#endif
+#ifndef _IOSTREAM
+#define _IOSTREAM
+  #include <iostream>
+#endif
+#ifndef _STRING
+#define _STRING
+  #include <string>
+#endif
+
+#ifndef _TRIE
+#define _TRIE
 
 using namespace std;
 
@@ -188,6 +203,26 @@ public:
     }while(!bfs.empty());
   }
 
+
+  // void clear(){
+  //   std::queue<trie*> bfs;
+  //   bfs.push(this); 
+
+  //   do{
+  //     auto node_ptr = bfs.front();
+  //     if ( !node_ptr->children.empty()){ 
+  //       for (auto&& i : node_ptr->children){
+  //         if (i.second != nullptr)
+  //           bfs.push(i.second);
+  //       node_ptr->children.clear();
+  //     }
+  //     if (node_ptr != this)
+  //       delete node_ptr;
+  //     bfs.pop();
+  //   }while((!bfs.empty()))
+  // }
+
+  
   //
   // This is the code done in class for the add() function except
   // support has been added to handle an end-of-sequence marker.
@@ -310,3 +345,5 @@ public:
 inline void swap(trie& a, trie& b){
   a.swap(b);
 }
+
+#endif

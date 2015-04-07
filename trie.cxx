@@ -1,12 +1,16 @@
 #include "caleb-debug.hxx"
-// #include "preney-bm.hxx"
+namespace cxx_project {
+
+} //future
 
 #include <fstream>
 #include <iterator>
-#include <iostream>
+#ifndef _IOSTREAM
+#define _IOSTREAM
+  #include <iostream>
+#endif
 #include "trie.hxx"
 
-namespace cxx_project {} //future
 using namespace cxx_project;
 using namespace std;
 
@@ -18,30 +22,23 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 	
 	bfs.emplace(string{}, this);
 
-	et("output_matches start");
-
 	for(auto curchar : pattern){ // for each char in string
 		for(auto node = bfs.front(); //TODO: make into dowhile
 			bfs.front().first.size() == cur_prefix_len && !bfs.empty(); 
 			bfs.pop(), node = bfs.front()){
 			
-			ftype(node.first, node.first);
-
 			if(node.second == nullptr){ 
-				//Guard against node's trie const* being nullptr. 
-				bfs.pop(); // will be skipped by contiune 
+				bfs.pop();
 				continue;
 			}
 			auto child = node.second->children.find(curchar);
 			auto childEnd = node.second->children.end(); //end iterator of the child map
 
 			if(curchar != '?'){
-				
 				if(child != childEnd){ //this is a possible match
 					bfs.emplace(node.first + curchar, child->second);
 				}
 			} else if(curchar == '?'){
-				// range-based for loop that iterates over node's immediate children.
 				for(auto child : node.second->children) 
 					bfs.emplace(node.first + child.first, child.second); //possible match	
 			}
@@ -49,18 +46,13 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 		++cur_prefix_len;
 	}
 
-	et("output_matches queue ready");
-
-	while(!bfs.empty()){ // for each element in queue
+	while(!bfs.empty()){
 		bool is_match = false;
 		auto node = bfs.front(); // trie*
 
-		// size() == pattern.size() AND if node's trie const* is not nullptr
 		if(node.first.size() == pattern.size() && node.second != nullptr){
 			auto i = node.second->children.find(char{});
 			auto iEnd = node.second->children.end();
-
-			ftype(node.first, node.first);
 
 			if( i!=iEnd && i->second == nullptr){ //end of sequence marker found
 				is_match = true;
@@ -75,7 +67,6 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 		bfs.pop();
 	}
 
-	et("output_matches exit");
 	return retval;
 }
 
