@@ -18,7 +18,7 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 	bfs.emplace(string{}, this);
 
 	for(auto curchar : pattern){ // for each char in string
-		while(bfs.front().first.size() == cur_prefix_len && !bfs.empty()){
+		while(!bfs.empty() && bfs.front().first.size() == cur_prefix_len){
 			auto node = bfs.front();
 			if(node.second == nullptr){ 
 				bfs.pop();
