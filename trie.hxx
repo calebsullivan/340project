@@ -18,6 +18,9 @@
 #ifndef _TRIE
 #define _TRIE
 
+namespace cxx_project {
+
+
 using namespace std;
 
 //
@@ -345,5 +348,7 @@ public:
 inline void swap(trie& a, trie& b){
   a.swap(b);
 }
+
+} //future
 
 #endif

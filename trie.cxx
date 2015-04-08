@@ -1,7 +1,4 @@
 #include "caleb-debug.hxx"
-namespace cxx_project {
-
-} //future
 
 #include <fstream>
 #include <iterator>
@@ -23,10 +20,8 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 	bfs.emplace(string{}, this);
 
 	for(auto curchar : pattern){ // for each char in string
-		for(auto node = bfs.front(); //TODO: make into dowhile
-			bfs.front().first.size() == cur_prefix_len && !bfs.empty(); 
-			bfs.pop(), node = bfs.front()){
-			
+		while(bfs.front().first.size() == cur_prefix_len && !bfs.empty()){
+			auto node = bfs.front();
 			if(node.second == nullptr){ 
 				bfs.pop();
 				continue;
@@ -42,6 +37,7 @@ std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) cons
 				for(auto child : node.second->children) 
 					bfs.emplace(node.first + child.first, child.second); //possible match	
 			}
+			bfs.pop();
 		}
 		++cur_prefix_len;
 	}
