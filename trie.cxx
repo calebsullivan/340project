@@ -8,8 +8,8 @@
 #endif
 #include "trie.hxx"
 
-using namespace cxx_project;
 using namespace std;
+using namespace cxx_project;
 
 template <typename OutIter>
 std::size_t trie::output_matches(std::string const& pattern, OutIter&& out) const{
